@@ -1,20 +1,31 @@
-'use strict';
-
-// do not use res.render or templates(pug) with a MEAN app
-// use res.send OR res.json instead
+'use strict'
 
 const express = require('express')
+const mongoose = require('mongoose')
 
 const app = express()
-const port = process.env.PORT || 3000
+const MONGODB_URL = process.env.MONGODB_URL || 'mongodb://localhost:27017/meanchat'
+const PORT = process.env.PORT || 3000
 
-app.set('port', port)
-
-// middlewares
-app.use(express.static('client')) // base directory is root, not where server is
+app.use(express.static('client'))
 
 app.get('/api/title', (req, res) =>
-  res.send({ title: 'MEAN 101 from Node' })
+  res.json({ title: 'MEAN Chat' })
 )
 
-app.listen(port, () => console.log(`Listening on port ${port}`))
+const Message = mongoose.model('message', {
+  author: String,
+  content: String,
+})
+
+app.get('/api/messages', (req, res, err) =>
+  Message
+    .find()
+    .then(messages => res.json({ messages }))
+    .catch(err)
+)
+
+mongoose.Promise = Promise
+mongoose.connect(MONGODB_URL, () =>
+  app.listen(PORT, () => console.log(`Listening on port: ${PORT}`))
+)
