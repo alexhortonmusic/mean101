@@ -1,0 +1,20 @@
+{
+  "name": "mean101",
+  "description": "",
+  "main": "server.js",
+  "authors": [
+    "Alex Horton <alexhortonmusic@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/alexhortonmusic/mean101",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.8"
+  }
+}
